@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag, MessageCircle, Shield, Package, RotateCcw, Star } from "lucide-react";
 import { getProductBySlug, formatPrice, colorMap, getStockNumber, products } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useCartStore } from "@/stores/useCartStore";
 import { useFavoritesStore } from "@/stores/useFavoritesStore";
 
