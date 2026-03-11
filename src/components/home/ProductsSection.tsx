@@ -6,6 +6,7 @@ import { products, formatPrice, colorMap, getStockNumber, type Product } from "@
 import { getProductImage } from "@/data/productImages";
 import { useFavoritesStore } from "@/stores/useFavoritesStore";
 import { useCartStore } from "@/stores/useCartStore";
+import { toast } from "sonner";
 
 const tabs = [
   { label: "MAIS VENDIDOS", filter: (p: Product) => p.badge === "MAIS PEDIDO" },
@@ -15,11 +16,11 @@ const tabs = [
 ];
 
 const badgeStyles: Record<string, string> = {
-  "MAIS PEDIDO": "bg-ocean-500 text-sand",
-  "NOVO DROP": "bg-teal text-ocean",
-  "PROMOÇÃO": "bg-coral text-sand",
+  "MAIS PEDIDO": "bg-ocean-dark text-teal-400 border border-teal/30",
+  "NOVO DROP": "bg-teal-900 text-teal-400",
+  "PROMOÇÃO": "bg-coral-100 text-coral",
   "DROP EXCLUSIVO": "bg-coral text-sand",
-  "NOVO": "bg-teal text-ocean",
+  "NOVO": "bg-ocean-700 text-sand",
 };
 
 const ProductCard = ({ product }: { product: Product }) => {
@@ -30,25 +31,34 @@ const ProductCard = ({ product }: { product: Product }) => {
   const displayPrice = product.promotionalPrice || product.price;
   const image = getProductImage(product.sku);
 
+  const categoryLabel = product.category === "polos" ? "POLO" : product.category === "bermudas" ? "BERMUDA" : product.category === "bones" ? "BONÉ" : "ÓCULOS";
+
+  const handleAdd = () => {
+    addItem({ sku: product.sku, name: product.name, price: displayPrice, color: product.colors[0] });
+    toast.success(`✅ ${product.name} adicionada à sacola!`);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative bg-card rounded-lg overflow-hidden card-hover"
+      className="group relative bg-card rounded-[14px] overflow-hidden border border-sand-200 transition-all duration-300 hover:-translate-y-1.5"
       style={{ boxShadow: "var(--al-shadow-card)" }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 40px rgba(5,13,24,0.14)"; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "var(--al-shadow-card)"; }}
     >
       {/* Image */}
       <div className="relative aspect-[3/4] bg-sand-100 overflow-hidden">
         {image ? (
-          <img src={image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+          <img src={image} alt={product.name} className="w-full h-full object-contain" loading="lazy" />
         ) : (
           <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
         )}
 
         {/* Badge */}
         {product.badge && (
-          <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-pill text-[10px] font-heading font-bold uppercase tracking-wider ${badgeStyles[product.badge] || "bg-ocean text-sand"}`}>
+          <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-pill text-[10px] font-heading font-bold uppercase tracking-wider ${badgeStyles[product.badge] || "bg-ocean-dark text-sand"}`}>
             {product.badge}
           </span>
         )}
@@ -68,29 +78,30 @@ const ProductCard = ({ product }: { product: Product }) => {
           </span>
         )}
 
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-ocean/0 group-hover:bg-ocean/60 transition-colors flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
+        {/* Hover actions - desktop */}
+        <div className="absolute inset-x-0 bottom-0 p-3 flex flex-col gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-card via-card/95 to-transparent pt-8">
           <button
-            onClick={() => addItem({ sku: product.sku, name: product.name, price: displayPrice, color: product.colors[0] })}
-            className="px-4 py-2 bg-coral rounded-lg font-heading text-xs font-bold uppercase text-sand hover:bg-coral-400 transition-colors"
+            onClick={handleAdd}
+            className="w-full py-2.5 bg-coral rounded-lg font-body text-xs font-semibold uppercase tracking-wider text-sand hover:bg-coral-400 transition-colors"
           >
             ADICIONAR
           </button>
           <Link
             to={`/produto/${product.slug}`}
-            className="px-4 py-2 border border-sand rounded-lg font-heading text-xs font-bold uppercase text-sand hover:bg-sand/10 transition-colors"
+            className="w-full py-2.5 border border-ocean rounded-lg font-body text-xs font-semibold uppercase tracking-wider text-ocean hover:bg-ocean hover:text-sand transition-colors text-center block"
           >
-            VER
+            VER DETALHES
           </Link>
         </div>
       </div>
 
       {/* Info */}
       <div className="p-3">
-        <p className="font-body text-[10px] uppercase tracking-wider text-ocean-500 mb-1">
-          {product.category === "polos" ? "POLO" : product.category === "bermudas" ? "BERMUDA" : product.category === "bones" ? "BONÉ" : "ÓCULOS"}
+        {/* Category */}
+        <p className="font-body text-[10px] uppercase tracking-[0.12em] text-teal font-semibold mb-1">
+          {categoryLabel}
         </p>
-        <p className="font-heading text-sm font-semibold text-ocean leading-tight mb-1 line-clamp-2">
+        <p className="font-body text-sm font-semibold text-ocean leading-tight mb-1.5 line-clamp-2">
           {product.name}
         </p>
 
@@ -99,9 +110,9 @@ const ProductCard = ({ product }: { product: Product }) => {
           {product.colors.slice(0, 4).map((color) => (
             <span
               key={color}
-              className="w-4 h-4 rounded-full border border-sand-200"
+              className="w-4 h-4 rounded-full border border-sand-200 cursor-pointer hover:scale-125 transition-transform"
               style={{ backgroundColor: colorMap[color] || "#ccc" }}
-              title={color}
+              title={color.charAt(0).toUpperCase() + color.slice(1)}
             />
           ))}
         </div>
@@ -116,6 +127,14 @@ const ProductCard = ({ product }: { product: Product }) => {
         <p className="font-body text-[10px] text-muted-foreground mt-0.5">
           3x de {formatPrice(displayPrice / 3)} s/ juros
         </p>
+
+        {/* Mobile-only add button */}
+        <button
+          onClick={handleAdd}
+          className="lg:hidden w-full mt-3 py-2.5 bg-coral rounded-lg font-body text-xs font-semibold uppercase tracking-wider text-sand hover:bg-coral-400 transition-colors"
+        >
+          ADICIONAR
+        </button>
       </div>
     </motion.div>
   );
@@ -129,7 +148,7 @@ const ProductsSection = () => {
   return (
     <section className="py-16 lg:py-24 bg-sand">
       <div className="container">
-        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean text-center mb-2">
+        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean text-center mb-2 tracking-wide">
           COLEÇÃO ALOHA
         </h2>
         <p className="font-body text-ocean-700 text-center mb-8">
@@ -142,10 +161,10 @@ const ProductsSection = () => {
             <button
               key={tab.label}
               onClick={() => setActiveTab(i)}
-              className={`px-5 py-2 rounded-pill font-heading text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${
+              className={`px-5 py-2 rounded-pill font-body text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-colors border-b-2 ${
                 i === activeTab
-                  ? "bg-ocean text-sand"
-                  : "bg-sand-100 text-ocean/60 hover:text-ocean"
+                  ? "bg-ocean-dark text-sand border-coral"
+                  : "bg-card text-ocean/60 hover:text-ocean border-transparent"
               }`}
             >
               {tab.label}
@@ -158,6 +177,12 @@ const ProductsSection = () => {
           {displayProducts.map((product) => (
             <ProductCard key={product.sku} product={product} />
           ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Link to="/colecao/polos" className="font-body text-sm font-semibold text-teal hover:underline">
+            Ver todos →
+          </Link>
         </div>
       </div>
     </section>

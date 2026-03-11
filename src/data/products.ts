@@ -104,24 +104,69 @@ export const getLowStockProducts = () => products.filter(p => {
   return false;
 });
 
-export const looks = [
+export interface Look {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  products: string[];
+  style: string;
+  image: string;
+  totalPrice: number;
+  installment?: string;
+  badge?: string;
+}
+
+export const looks: Look[] = [
   {
-    id: "look-1", name: "Look Navy Clássico", slug: "look-navy-classico",
+    id: "look-1", name: "Navy Total", slug: "look-navy-total",
     description: "O conjunto perfeito para quem sabe chegar.",
     products: ["PL-NAV-001", "BM-SAR-001", "BN-STR-001", "OC-SPT-001"],
     style: "casual",
+    image: "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=600&q=80",
+    totalPrice: 549.70,
+    installment: "ou 3x de R$ 183,23",
   },
   {
-    id: "look-2", name: "Look Streetwear Militar", slug: "look-streetwear-militar",
-    description: "Estilo jogador com pegada military.",
-    products: ["PL-VER-005", "BM-CAR-004", "BN-TRK-002", "OC-WAY-002"],
+    id: "look-2", name: "Caqui + Navy", slug: "look-caqui-navy",
+    description: "Estilo casual sofisticado com tons terrosos.",
+    products: ["PL-NAV-001", "BM-CAR-004", "BN-TRK-002"],
     style: "casual",
+    image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&q=80",
+    totalPrice: 429.70,
   },
   {
-    id: "look-3", name: "Look Drop Exclusivo", slug: "look-drop-exclusivo",
+    id: "look-3", name: "Branco e Preto", slug: "look-branco-preto",
+    description: "Clássico atemporal em preto e branco.",
+    products: ["PL-BCO-002", "BM-MOL-002", "BN-EMB-003"],
+    style: "casual",
+    image: "https://images.unsplash.com/photo-1574180566232-aaad1b5b8450?w=600&q=80",
+    totalPrice: 399.70,
+  },
+  {
+    id: "look-4", name: "Verde Militar", slug: "look-verde-militar",
+    description: "Pegada military com atitude jogador.",
+    products: ["PL-VER-005", "BM-CAR-004", "BN-TRK-002"],
+    style: "casual",
+    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80",
+    totalPrice: 464.70,
+  },
+  {
+    id: "look-5", name: "Bordô + Cinza", slug: "look-bordo-cinza",
+    description: "Combinação ousada para se destacar.",
+    products: ["PL-BCO-002", "BM-MOL-002", "OC-PIL-003"],
+    style: "casual",
+    image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&q=80",
+    totalPrice: 488.80,
+  },
+  {
+    id: "look-6", name: "Drop Exclusivo", slug: "look-drop-exclusivo",
     description: "Peças limitadas para quem não espera.",
-    products: ["PL-PMD-004", "BM-SRF-003", "BN-EMB-003", "OC-PIL-003"],
+    products: ["PL-PMD-004", "BM-SRF-003", "BN-EMB-003"],
     style: "praia",
+    image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=600&q=80",
+    totalPrice: 469.70,
+    badge: "DROP EXCLUSIVO",
   },
 ];
 
@@ -133,7 +178,7 @@ export const dropProduct = {
   originalPrice: 229.90,
   totalUnits: 15,
   remainingUnits: 8,
-  dropDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+  dropDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
   active: true,
 };
 
@@ -153,7 +198,7 @@ export const colorMap: Record<string, string> = {
   verde: "#2D6A4F",
   "azul-petróleo": "#005F73",
   "navy-estampa": "#1B3A5C",
-  bege: "#D4C5A9",
+  bege: "#D4A5A9",
   fumê: "#4A4A4A",
   "espelhado azul": "#3B82F6",
   "espelhado prata": "#C0C0C0",

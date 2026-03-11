@@ -44,10 +44,10 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`font-body text-xs uppercase tracking-wider transition-colors ${
+                className={`font-body text-xs font-semibold uppercase tracking-[0.1em] transition-all pb-1 border-b-2 ${
                   item.isDrop
-                    ? "text-coral animate-pulse-coral font-semibold"
-                    : "text-sand/80 hover:text-sand"
+                    ? "text-coral border-coral animate-pulse-coral"
+                    : "text-sand/80 border-transparent hover:text-sand hover:border-coral"
                 }`}
               >
                 {item.label}
@@ -107,6 +107,16 @@ const Header = () => {
                   </Link>
                 ))}
               </nav>
+              <div className="mt-auto p-4">
+                <a
+                  href="https://wa.me/5592934503860"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-3 bg-[#25D366] rounded-lg font-heading text-sm font-bold text-sand"
+                >
+                  <MessageCircle size={18} /> WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         )}

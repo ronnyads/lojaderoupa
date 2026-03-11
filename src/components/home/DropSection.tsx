@@ -117,7 +117,7 @@ const DropSection = () => {
             >
               GARANTIR AGORA
             </Link>
-            <button className="px-8 py-4 border border-sand/30 rounded-lg font-heading text-sm font-semibold uppercase tracking-wider text-sand/80 hover:border-sand hover:text-sand transition-colors">
+            <button className="px-8 py-4 border-2 border-sand/60 rounded-lg font-heading text-sm font-semibold uppercase tracking-wider text-sand hover:bg-sand/10 hover:border-sand transition-colors">
               AVISAR QUANDO SAIR
             </button>
           </div>

@@ -60,10 +60,10 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Bebas Neue", "sans-serif"],
+        display: ['"Bebas Neue"', "cursive"],
         heading: ["Syne", "sans-serif"],
-        body: ["DM Sans", "sans-serif"],
-        price: ["Space Grotesk", "sans-serif"],
+        body: ['"DM Sans"', "sans-serif"],
+        price: ['"Space Grotesk"', "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
