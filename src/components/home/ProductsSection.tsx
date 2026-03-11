@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { products, formatPrice, colorMap, getStockNumber, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useFavoritesStore } from "@/stores/useFavoritesStore";
 import { useCartStore } from "@/stores/useCartStore";
 
