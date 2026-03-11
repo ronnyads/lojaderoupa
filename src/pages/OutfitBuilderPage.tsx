@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Check } from "lucide-react";
 import { getProductsByCategory, formatPrice, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useCartStore } from "@/stores/useCartStore";
 
 const steps = [
