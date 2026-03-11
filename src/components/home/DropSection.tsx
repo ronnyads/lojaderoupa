@@ -3,6 +3,14 @@ import { motion } from "framer-motion";
 import { dropProduct, formatPrice } from "@/data/products";
 import { Link } from "react-router-dom";
 
+const revealVariant = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
+
 const DropSection = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -26,27 +34,34 @@ const DropSection = () => {
 
   return (
     <section className="bg-ocean-dark noise-texture py-16 lg:py-24 relative overflow-hidden">
-      {/* Subtle teal glow edges */}
       <div className="absolute inset-0 bg-gradient-to-r from-teal-900/20 via-transparent to-teal-900/20 pointer-events-none" />
 
       <div className="container relative z-10">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
+          variants={revealVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          custom={0}
           className="text-center mb-8"
         >
-          <span className="inline-block px-6 py-2 bg-coral rounded-pill font-display text-lg text-sand tracking-wider animate-pulse-glow">
+          <motion.span
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="inline-block px-6 py-2 bg-coral rounded-pill font-display text-lg text-sand tracking-wider"
+          >
             DROP EXCLUSIVO
-          </span>
+          </motion.span>
         </motion.div>
 
         {/* Countdown */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={revealVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          custom={1}
           className="flex items-center justify-center gap-3 lg:gap-4 mb-12"
         >
           {[
@@ -54,24 +69,29 @@ const DropSection = () => {
             { value: timeLeft.hours, label: "HRS" },
             { value: timeLeft.minutes, label: "MIN" },
             { value: timeLeft.seconds, label: "SEG" },
-          ].map((block, i) => (
+          ].map((block) => (
             <div key={block.label} className="flex flex-col items-center">
-              <div className="bg-ocean-800 rounded-lg w-16 h-20 lg:w-20 lg:h-24 flex items-center justify-center">
+              <motion.div
+                className="bg-ocean-800 rounded-lg w-16 h-20 lg:w-20 lg:h-24 flex items-center justify-center"
+                whileHover={{ scale: 1.08, borderColor: "hsl(var(--teal-500))" }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <span className="font-display text-3xl lg:text-5xl text-sand">
                   {String(block.value).padStart(2, "0")}
                 </span>
-              </div>
+              </motion.div>
               <span className="font-body text-[10px] text-teal-400 mt-1.5 tracking-wider">{block.label}</span>
-              {i < 3 && <span className="hidden" />}
             </div>
           ))}
         </motion.div>
 
         {/* Product */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={revealVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          custom={2}
           className="max-w-2xl mx-auto text-center"
         >
           <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-sand mb-2">
@@ -100,7 +120,7 @@ const DropSection = () => {
                 initial={{ width: 0 }}
                 whileInView={{ width: `${stockPercent}%` }}
                 viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.3 }}
+                transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`h-full rounded-full ${stockPercent > 50 ? 'bg-teal' : 'bg-coral'}`}
               />
             </div>
@@ -111,15 +131,19 @@ const DropSection = () => {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              to="/drop"
-              className="px-8 py-4 bg-teal rounded-lg font-heading text-sm font-bold uppercase tracking-wider text-ocean hover:brightness-110 transition animate-pulse-glow text-center"
-            >
-              GARANTIR AGORA
-            </Link>
-            <button className="px-8 py-4 border-2 border-sand/60 rounded-lg font-heading text-sm font-semibold uppercase tracking-wider text-sand hover:bg-sand/10 hover:border-sand transition-colors">
-              AVISAR QUANDO SAIR
-            </button>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.96 }}>
+              <Link
+                to="/drop"
+                className="block px-8 py-4 bg-teal rounded-lg font-heading text-sm font-bold uppercase tracking-wider text-ocean hover:brightness-110 transition animate-pulse-glow text-center"
+              >
+                GARANTIR AGORA
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.96 }}>
+              <button className="px-8 py-4 border-2 border-sand/60 rounded-lg font-heading text-sm font-semibold uppercase tracking-wider text-sand hover:bg-sand/10 hover:border-sand transition-colors">
+                AVISAR QUANDO SAIR
+              </button>
+            </motion.div>
           </div>
         </motion.div>
       </div>
