@@ -28,6 +28,9 @@ const ProductCard = ({ product }: { product: Product }) => {
   const fav = isFavorite(product.sku);
   const stock = getStockNumber(product);
   const displayPrice = product.promotionalPrice || product.price;
+  const image = getProductImage(product.sku);
+  const stock = getStockNumber(product);
+  const displayPrice = product.promotionalPrice || product.price;
 
   return (
     <motion.div
