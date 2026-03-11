@@ -35,6 +35,7 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         ocean: {
+          DEFAULT: "hsl(var(--ocean-950))",
           950: "hsl(var(--ocean-950))",
           900: "hsl(var(--ocean-900))",
           800: "hsl(var(--ocean-800))",
@@ -42,6 +43,7 @@ export default {
           500: "hsl(var(--ocean-500))",
         },
         sand: {
+          DEFAULT: "hsl(var(--sand-50))",
           50: "hsl(var(--sand-50))",
           100: "hsl(var(--sand-100))",
           200: "hsl(var(--sand-200))",
@@ -49,11 +51,13 @@ export default {
           600: "hsl(var(--sand-600))",
         },
         teal: {
+          DEFAULT: "hsl(var(--teal-500))",
           500: "hsl(var(--teal-500))",
           400: "hsl(var(--teal-400))",
           900: "hsl(var(--teal-900))",
         },
         coral: {
+          DEFAULT: "hsl(var(--coral-500))",
           500: "hsl(var(--coral-500))",
           400: "hsl(var(--coral-400))",
           100: "hsl(var(--coral-100))",
