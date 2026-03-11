@@ -42,7 +42,11 @@ const ProductCard = ({ product }: { product: Product }) => {
     >
       {/* Image */}
       <div className="relative aspect-[3/4] bg-sand-100 overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
+        {image ? (
+          <img src={image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
+        )}
 
         {/* Badge */}
         {product.badge && (
