@@ -2,10 +2,11 @@ import { Helmet } from "react-helmet-async";
 import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
 import DropSection from "@/components/home/DropSection";
-import LooksSection from "@/components/home/LooksSection";
 import ProductsSection from "@/components/home/ProductsSection";
+import LooksSection from "@/components/home/LooksSection";
 import KitBuilderSection from "@/components/home/KitBuilderSection";
 import SocialProofSection from "@/components/home/SocialProofSection";
+import InstagramSection from "@/components/home/InstagramSection";
 import WhatsAppCTASection from "@/components/home/WhatsAppCTASection";
 
 const Index = () => {
@@ -32,9 +33,10 @@ const Index = () => {
       <TrustBar />
       <DropSection />
       <ProductsSection />
+      <SocialProofSection />
       <LooksSection />
       <KitBuilderSection />
-      <SocialProofSection />
+      <InstagramSection />
       <WhatsAppCTASection />
     </>
   );

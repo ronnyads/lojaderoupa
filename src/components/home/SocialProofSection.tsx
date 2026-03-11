@@ -4,38 +4,42 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const reviews = [
   {
-    name: "Matheus G.", city: "Manaus, AM", initials: "MG",
-    avatarColor: "bg-teal",
-    text: "Recebi minha polo navy em 24h. Qualidade absurda, cai perfeito. Já pedi mais 2 peças. Melhor loja de Manaus!",
+    name: "João V.", city: "Centro, Manaus", initials: "JV",
+    text: "Polo + bermuda chegou no dia seguinte. Qualidade surreal, fiz sucesso na festa. Aloha demais! 🤙",
+    product: "Polo Piquet Navy + Bermuda Sarja", rating: 5,
+  },
+  {
+    name: "Felipe M.", city: "Flores, Manaus", initials: "FM",
+    text: "Tropa chegou comentando no look. Boné + óculos completou o conjunto perfeito. Voltei pra comprar o Drop #06.",
+    product: "Boné Strapback + Óculos Square", rating: 5,
+  },
+  {
+    name: "Lucas R.", city: "Parque 10, Manaus", initials: "LR",
+    text: "Garanti o Drop #05 e esgotou em 2 horas depois. Valeu ter avisado no WhatsApp!",
+    product: "Drop Exclusivo #05", rating: 5,
+  },
+  {
+    name: "André S.", city: "Adrianópolis, Manaus", initials: "AS",
+    text: "Montei o look completo pela ferramenta do site e ficou exatamente como eu imaginei. Cheguei no jogo e todo mundo perguntou.",
+    product: "Look Completo — R$ 549,70", rating: 5,
+  },
+  {
+    name: "Bruno L.", city: "Compensa, Manaus", initials: "BL",
+    text: "PIX 5% off e frete grátis acima de R$ 350. Peguei 3 peças e saiu um preço muito bom. Atendimento rápido.",
+    product: "Polo Lisa Branca + Bermuda + Boné", rating: 5,
+  },
+  {
+    name: "Mateus C.", city: "São Jorge, Manaus", initials: "MC",
+    text: "A qualidade das peças da Aloha é outra. Nunca achei polo desse padrão aqui em Manaus.",
     product: "Polo Piquet Navy Premium", rating: 5,
   },
   {
-    name: "Rafael S.", city: "Manaus, AM", initials: "RS",
-    avatarColor: "bg-ocean-dark",
-    text: "O conjunto polo+bermuda ficou incrível. Vários elogios na rua. Vai chegar no delivery mais rápido que promete.",
+    name: "Rafael S.", city: "Cidade Nova, Manaus", initials: "RS",
+    text: "O conjunto polo+bermuda ficou incrível. Vários elogios na rua. Delivery mais rápido do que esperava.",
     product: "Look Navy Total", rating: 5,
   },
   {
-    name: "João P.", city: "Manaus, AM", initials: "JP",
-    avatarColor: "bg-coral",
-    text: "Salve Aloha! Outro nível de qualidade. O boné bordado é premium demais para o preço. Recomendo muito.",
-    product: "Boné Bordado Premium", rating: 5,
-  },
-  {
-    name: "Carlos B.", city: "Manaus, AM", initials: "CB",
-    avatarColor: "bg-sand-400",
-    text: "Comprei os óculos aviador e chegou no mesmo dia no meu bairro. Atendimento no Zap foi top demais.",
-    product: "Óculos Piloto Aviador", rating: 5,
-  },
-  {
-    name: "Lucas M.", city: "Novo Airão, AM", initials: "LM",
-    avatarColor: "bg-teal-900",
-    text: "Morei na Zona Norte anos e sempre comprei na Aloha. Agora tem loja online! Chegou pelo correio em 3 dias.",
-    product: "Bermuda Surf Board Short", rating: 5,
-  },
-  {
-    name: "Diego L.", city: "Manaus, AM", initials: "DL",
-    avatarColor: "bg-ocean-700",
+    name: "Diego L.", city: "Zona Norte, Manaus", initials: "DL",
     text: "Drop exclusivo de polo absurdo. Só 5 peças disponíveis, garanti a minha rápido. O fit é perfeito demais.",
     product: "Polo Performance Drop", rating: 5,
   },
@@ -57,47 +61,46 @@ const SocialProofSection = () => {
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
   }, [isPaused, next]);
 
-  // Show 3 cards on desktop, 1 on mobile via scroll snap
   const visibleReviews = [];
   for (let j = 0; j < 3; j++) {
     visibleReviews.push(reviews[(currentIndex + j) % reviews.length]);
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-sand">
+    <section className="py-16 lg:py-24 bg-ocean-950 noise-texture">
       <div className="container">
-        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean text-center mb-2 tracking-wide">
-          QUEM ALOHA, CHEGA
+        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-sand text-center mb-2 tracking-wide">
+          QUEM ALOHA, CHEGA 🤙
         </h2>
-        <p className="font-body text-ocean-700 text-center mb-10">
-          Depoimentos reais dos nossos clientes
+        <p className="font-body text-teal-400 text-center mb-10">
+          A galera de Manaus que chegou com estilo
         </p>
 
-        {/* Desktop carousel */}
+        {/* Carousel */}
         <div
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Nav arrows */}
+          {/* Arrows */}
           <button
             onClick={prev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card border border-sand-200 flex items-center justify-center text-ocean hover:bg-sand-100 transition-colors hidden lg:flex"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-coral flex items-center justify-center text-sand hover:brightness-110 transition hidden lg:flex"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={next}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card border border-sand-200 flex items-center justify-center text-ocean hover:bg-sand-100 transition-colors hidden lg:flex"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-coral flex items-center justify-center text-sand hover:brightness-110 transition hidden lg:flex"
           >
             <ChevronRight size={20} />
           </button>
 
-          {/* Mobile: scroll snap / Desktop: 3 cards */}
+          {/* Cards */}
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-4 lg:pb-0">
             {visibleReviews.map((review, i) => (
               <motion.div
@@ -105,44 +108,56 @@ const SocialProofSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="w-80 lg:w-1/3 flex-shrink-0 snap-center bg-card rounded-[14px] p-5 border border-sand-200 border-l-[3px] border-l-coral"
-                style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}
+                className="w-80 lg:w-1/3 flex-shrink-0 snap-center bg-ocean-800 rounded-2xl p-6 border border-coral/20"
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center font-heading text-sm font-bold text-sand`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-full bg-teal flex items-center justify-center font-heading text-sm font-bold text-ocean-950">
                     {review.initials}
                   </div>
                   <div className="flex-1">
-                    <p className="font-heading text-sm font-semibold text-ocean">{review.name}</p>
-                    <p className="font-body text-xs text-ocean/50">{review.city}</p>
+                    <p className="font-heading text-sm font-semibold text-sand">{review.name}</p>
+                    <p className="font-body text-xs text-sand/40">{review.city}</p>
                   </div>
                 </div>
-                <div className="flex gap-0.5 mb-2">
+                <div className="flex gap-0.5 mb-3">
                   {[...Array(review.rating)].map((_, j) => (
                     <Star key={j} size={14} className="fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="font-body text-sm text-ocean/80 leading-relaxed mb-3">{review.text}</p>
-                <span className="inline-block px-2.5 py-1 rounded-pill bg-sand-100 border border-sand-200 font-body text-[10px] text-ocean/60">
+                <p className="font-body text-sm text-sand/70 leading-relaxed mb-4">{review.text}</p>
+                <span className="inline-block px-3 py-1.5 rounded-pill bg-ocean-700 border border-ocean-500/20 font-body text-[10px] text-teal-400">
                   📦 {review.product}
                 </span>
               </motion.div>
             ))}
           </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-6">
+            {reviews.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  i === currentIndex ? "bg-coral w-6" : "bg-ocean-700 hover:bg-ocean-500"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Rating + WhatsApp CTA */}
+        {/* Rating + CTA */}
         <div className="text-center mt-10 space-y-4">
-          <p className="font-body text-sm text-ocean/60">
-            ⭐ <span className="font-price font-bold text-ocean">4.9</span> — Baseado em 148 avaliações de clientes em Manaus
+          <p className="font-body text-sm text-sand/50">
+            ⭐ <span className="font-price font-bold text-sand">4.9</span> — 127 avaliações de clientes de Manaus
           </p>
           <a
-            href="https://wa.me/5592934503860?text=Salve!%20Quero%20saber%20mais%20sobre%20a%20Aloha%20🤙"
+            href="https://instagram.com/aloha_surf_conceito"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] rounded-lg font-heading text-sm font-bold uppercase text-sand hover:brightness-110 transition"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-coral rounded-lg font-display text-base uppercase tracking-wider text-sand hover:brightness-110 transition"
           >
-            💬 FALE COM A GENTE NO WHATSAPP
+            VER MAIS AVALIAÇÕES NO INSTAGRAM →
           </a>
         </div>
       </div>

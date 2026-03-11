@@ -1,21 +1,31 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
 import { looks, products, formatPrice } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 
 const LooksSection = () => {
   return (
     <section className="py-16 lg:py-24 bg-sand-100">
       <div className="container">
-        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean text-center mb-2 tracking-wide">
-          LOOKS DA SEMANA
-        </h2>
-        <p className="font-body text-ocean-700 text-center mb-10">
-          Conjuntos prontos para você chegar com estilo
-        </p>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-10">
+          <div>
+            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean tracking-wide leading-[0.9]">
+              LOOKS DA SEMANA
+            </h2>
+            <p className="font-body text-ocean-700 mt-2">
+              Conjuntos completos prontos para você chegar com estilo
+            </p>
+          </div>
+          <Link
+            to="/looks"
+            className="mt-4 lg:mt-0 font-heading text-sm font-bold uppercase tracking-wider text-coral hover:underline"
+          >
+            VER TODOS OS LOOKS →
+          </Link>
+        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-          {looks.map((look, i) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {looks.slice(0, 6).map((look, i) => {
             const lookProducts = look.products
               .map(sku => products.find(p => p.sku === sku)!)
               .filter(Boolean);
@@ -27,11 +37,9 @@ const LooksSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`group relative aspect-[3/4] rounded-[14px] overflow-hidden cursor-pointer ${
-                  i === 0 ? "md:col-span-2 md:row-span-1" : ""
-                }`}
+                className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer"
               >
-                {/* Photo fullbleed */}
+                {/* Photo */}
                 <img
                   src={look.image}
                   alt={`Look ${look.name} — Aloha Surf Conceito`}
@@ -39,63 +47,79 @@ const LooksSection = () => {
                   loading="lazy"
                 />
 
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(5,13,24,0.95)] via-[rgba(5,13,24,0.3)] to-transparent" />
+                {/* Default gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/90 via-ocean-950/20 to-transparent" />
 
-                {/* Badge */}
-                {look.badge && (
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-coral rounded-pill font-heading text-[10px] font-bold uppercase tracking-wider text-sand z-10">
-                    {look.badge}
-                  </span>
-                )}
+                {/* Hover overlay — dark */}
+                <div className="absolute inset-0 bg-ocean-950/0 group-hover:bg-ocean-950/75 transition-all duration-500" />
 
-                {/* Favorite */}
-                <button className="absolute top-4 right-4 w-8 h-8 rounded-full bg-card/20 backdrop-blur-sm flex items-center justify-center z-10 hover:scale-110 transition-transform">
-                  <Heart size={16} className="text-sand/80" />
-                </button>
+                {/* Badge price — top left */}
+                <span className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-coral rounded-pill font-price text-sm font-bold text-sand">
+                  {formatPrice(look.totalPrice)}
+                </span>
 
-                {/* Content */}
+                {/* Badge name — top right */}
+                <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-ocean-800/80 backdrop-blur-sm rounded-pill font-heading text-[10px] font-bold text-sand uppercase tracking-wider">
+                  {look.name}
+                </span>
+
+                {/* Default content */}
                 <div className="absolute inset-x-0 bottom-0 p-5 z-10">
                   <span className="font-display text-2xl lg:text-3xl text-sand tracking-wide">
                     {look.name.toUpperCase()}
                   </span>
-                  <p className="font-body text-sand/60 text-xs mt-1 mb-3">
+                  <p className="font-body text-sand/60 text-xs mt-1">
                     {look.description}
                   </p>
+                </div>
 
-                  {/* Product pills - visible on hover */}
-                  <div className="flex flex-wrap gap-1.5 mb-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    {lookProducts.map(p => (
-                      <span
+                {/* Hover content — piece list */}
+                <div className="absolute inset-0 flex flex-col justify-center p-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="space-y-3 mb-4">
+                    {lookProducts.map((p, j) => (
+                      <motion.div
                         key={p.sku}
-                        className="px-2.5 py-1 rounded-pill bg-teal/20 border border-teal/30 text-teal-400 font-body text-[10px]"
+                        className="flex items-center gap-3 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+                        style={{ transitionDelay: `${j * 80 + 100}ms` }}
                       >
-                        {p.name.split(' ').slice(0, 2).join(' ')}
-                      </span>
+                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-ocean-800 flex-shrink-0">
+                          {getProductImage(p.sku) ? (
+                            <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full bg-ocean-700" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-body text-xs text-sand/80 truncate">{p.name}</p>
+                          <p className="font-price text-xs text-coral font-semibold">{formatPrice(p.promotionalPrice || p.price)}</p>
+                        </div>
+                      </motion.div>
                     ))}
                   </div>
 
-                  {/* Price */}
-                  <div className="flex items-center gap-3">
-                    <span className="font-price text-lg font-bold text-coral">
-                      {formatPrice(look.totalPrice)}
-                    </span>
-                    {look.installment && (
-                      <span className="font-body text-[10px] text-sand/50">
-                        {look.installment}
-                      </span>
-                    )}
+                  {/* Separator + total */}
+                  <div className="border-t border-sand/20 pt-3 mb-4 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" style={{ transitionDelay: `${lookProducts.length * 80 + 150}ms` }}>
+                    <div className="flex justify-between">
+                      <span className="font-body text-xs text-sand/60">Total do Look</span>
+                      <span className="font-price text-lg text-coral font-bold">{formatPrice(look.totalPrice)}</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Hover CTA overlay */}
-                <div className="absolute inset-0 bg-ocean/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Link
-                    to={`/looks/${look.slug}`}
-                    className="px-6 py-3 bg-coral rounded-lg font-heading text-sm font-bold uppercase text-sand hover:bg-coral-400 transition-colors"
-                  >
-                    COMPRAR ESSE LOOK ▶
-                  </Link>
+                  {/* CTAs */}
+                  <div className="flex gap-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" style={{ transitionDelay: `${lookProducts.length * 80 + 250}ms` }}>
+                    <Link
+                      to="/montar-look"
+                      className="flex-1 py-2.5 bg-coral rounded-lg font-display text-sm uppercase tracking-wider text-sand text-center hover:brightness-110 transition"
+                    >
+                      MONTAR LOOK
+                    </Link>
+                    <Link
+                      to={`/looks/${look.slug}`}
+                      className="flex-1 py-2.5 border border-sand/40 rounded-lg font-display text-sm uppercase tracking-wider text-sand text-center hover:bg-sand/10 transition"
+                    >
+                      VER PEÇAS
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             );
@@ -105,7 +129,7 @@ const LooksSection = () => {
         <div className="text-center mt-10">
           <Link
             to="/montar-look"
-            className="inline-block px-8 py-4 bg-ocean-dark rounded-lg font-heading text-sm font-bold uppercase tracking-wider text-sand hover:brightness-110 transition"
+            className="inline-block px-8 py-4 bg-ocean rounded-lg font-display text-base uppercase tracking-wider text-sand hover:brightness-110 transition"
           >
             MONTE SEU LOOK →
           </Link>
