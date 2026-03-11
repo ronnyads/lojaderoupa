@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag, MessageCircle, Shield, Package, RotateCcw, Star } from "lucide-react";
 import { getProductBySlug, formatPrice, colorMap, getStockNumber, products } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useCartStore } from "@/stores/useCartStore";
 import { useFavoritesStore } from "@/stores/useFavoritesStore";
 
@@ -71,9 +72,13 @@ const ProductPage = () => {
             className="relative"
           >
             <div className="aspect-[3/4] bg-sand-100 rounded-lg overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200 flex items-center justify-center">
-                <span className="font-display text-6xl text-ocean/10">ALOHA</span>
-              </div>
+              {getProductImage(product.sku) ? (
+                <img src={getProductImage(product.sku)} alt={product.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200 flex items-center justify-center">
+                  <span className="font-display text-6xl text-ocean/10">ALOHA</span>
+                </div>
+              )}
             </div>
             {product.badge && (
               <span className="absolute top-4 left-4 px-3 py-1.5 rounded-pill bg-coral text-sand font-heading text-xs font-bold uppercase">
@@ -273,7 +278,13 @@ const ProductPage = () => {
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             {related.map((p) => (
               <Link key={p.sku} to={`/produto/${p.slug}`} className="bg-card rounded-lg overflow-hidden card-hover" style={{ boxShadow: "var(--al-shadow-card)" }}>
-                <div className="aspect-square bg-sand-100" />
+                <div className="aspect-square bg-sand-100 overflow-hidden">
+                  {getProductImage(p.sku) ? (
+                    <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    <div className="w-full h-full bg-sand-100" />
+                  )}
+                </div>
                 <div className="p-3">
                   <p className="font-body text-xs text-ocean/50 uppercase">{p.category}</p>
                   <p className="font-heading text-sm font-semibold text-ocean">{p.name}</p>

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import { products, formatPrice, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 
 const categories: Record<string, { label: string; filter: (p: Product) => boolean }> = {
   polos: { label: "Polos", filter: (p) => p.category === "polos" },
@@ -53,7 +54,13 @@ const CollectionPage = () => {
                 transition={{ delay: i * 0.05 }}
               >
                 <Link to={`/produto/${p.slug}`} className="block bg-card rounded-lg overflow-hidden card-hover" style={{ boxShadow: "var(--al-shadow-card)" }}>
-                  <div className="aspect-[3/4] bg-sand-100" />
+                  <div className="aspect-[3/4] bg-sand-100 overflow-hidden">
+                    {getProductImage(p.sku) ? (
+                      <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
+                    )}
+                  </div>
                   <div className="p-3">
                     <p className="font-heading text-sm font-semibold text-ocean mb-1">{p.name}</p>
                     <p className="font-price text-coral font-semibold">{formatPrice(p.promotionalPrice || p.price)}</p>

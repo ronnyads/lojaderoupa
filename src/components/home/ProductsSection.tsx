@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { products, formatPrice, colorMap, getStockNumber, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useFavoritesStore } from "@/stores/useFavoritesStore";
 import { useCartStore } from "@/stores/useCartStore";
 
@@ -27,6 +28,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   const fav = isFavorite(product.sku);
   const stock = getStockNumber(product);
   const displayPrice = product.promotionalPrice || product.price;
+  const image = getProductImage(product.sku);
 
   return (
     <motion.div
@@ -38,7 +40,11 @@ const ProductCard = ({ product }: { product: Product }) => {
     >
       {/* Image */}
       <div className="relative aspect-[3/4] bg-sand-100 overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
+        {image ? (
+          <img src={image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200" />
+        )}
 
         {/* Badge */}
         {product.badge && (

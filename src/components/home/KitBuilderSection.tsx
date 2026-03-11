@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { products, formatPrice, getProductsByCategory, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useCartStore } from "@/stores/useCartStore";
 
 const KitBuilderSection = () => {
@@ -37,7 +38,11 @@ const KitBuilderSection = () => {
               selected?.sku === p.sku ? "border-teal bg-teal/5" : "border-sand-200 hover:border-sand-400"
             }`}
           >
-            <div className="aspect-square bg-sand-100 rounded-md mb-2" />
+            <div className="aspect-square bg-sand-100 rounded-md mb-2 overflow-hidden">
+              {getProductImage(p.sku) && (
+                <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+              )}
+            </div>
             <p className="font-body text-xs text-ocean truncate">{p.name}</p>
             <p className="font-price text-sm text-coral font-semibold">{formatPrice(p.promotionalPrice || p.price)}</p>
           </button>

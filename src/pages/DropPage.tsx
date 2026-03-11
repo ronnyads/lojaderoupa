@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { dropProduct, formatPrice, getLowStockProducts } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useState, useEffect } from "react";
 
 const DropPage = () => {
@@ -106,7 +107,10 @@ const DropPage = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {lowStock.length > 0 ? lowStock.map((p) => (
                 <Link key={p.sku} to={`/produto/${p.slug}`} className="bg-card rounded-lg overflow-hidden card-hover" style={{ boxShadow: "var(--al-shadow-card)" }}>
-                  <div className="aspect-[3/4] bg-sand-100 relative">
+                  <div className="aspect-[3/4] bg-sand-100 relative overflow-hidden">
+                    {getProductImage(p.sku) && (
+                      <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                    )}
                     <span className="absolute top-2 left-2 px-2 py-0.5 bg-coral text-sand rounded-pill text-[10px] font-heading font-bold">
                       ⚡ {typeof p.stock === 'number' ? p.stock : '?'} PEÇAS
                     </span>
