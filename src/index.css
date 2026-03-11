@@ -1,105 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* DARK OCEAN */
+    --ocean-950: 213 60% 6%;
+    --ocean-900: 216 55% 10%;
+    --ocean-800: 215 60% 15%;
+    --ocean-700: 214 55% 22%;
+    --ocean-500: 216 62% 38%;
 
+    /* AREIA QUENTE */
+    --sand-50: 40 50% 98%;
+    --sand-100: 36 35% 93%;
+    --sand-200: 34 30% 85%;
+    --sand-400: 30 30% 64%;
+    --sand-600: 30 30% 42%;
+
+    /* NEON TEAL */
+    --teal-500: 170 100% 45%;
+    --teal-400: 170 80% 57%;
+    --teal-900: 172 100% 12%;
+
+    /* CORAL */
+    --coral-500: 12 100% 62%;
+    --coral-400: 12 100% 68%;
+    --coral-100: 12 100% 96%;
+
+    /* Semantic shadcn mapping */
+    --background: var(--sand-50);
+    --foreground: 213 60% 6%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 213 60% 6%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 213 60% 6%;
+    --primary: var(--ocean-950);
+    --primary-foreground: var(--sand-50);
+    --secondary: var(--sand-100);
+    --secondary-foreground: 213 60% 6%;
+    --muted: var(--sand-100);
+    --muted-foreground: 215 20% 45%;
+    --accent: var(--teal-500);
+    --accent-foreground: 0 0% 100%;
+    --destructive: var(--coral-500);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--sand-200);
+    --input: var(--sand-200);
+    --ring: var(--teal-500);
+    --radius: 14px;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: var(--ocean-900);
+    --sidebar-foreground: var(--sand-50);
+    --sidebar-primary: var(--teal-500);
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
+    --sidebar-accent: var(--ocean-800);
+    --sidebar-accent-foreground: var(--sand-50);
+    --sidebar-border: var(--ocean-700);
+    --sidebar-ring: var(--teal-500);
 
-@layer base {
+    /* Component tokens */
+    --al-shadow-card: 0 2px 8px rgba(5, 13, 24, 0.08), 0 8px 24px rgba(5, 13, 24, 0.06);
+    --al-shadow-hover: 0 8px 24px rgba(5, 13, 24, 0.16), 0 16px 48px rgba(5, 13, 24, 0.10);
+    --al-shadow-glow-teal: 0 0 20px rgba(0, 229, 200, 0.25);
+  }
+
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
   }
+
+  h1, h2, h3 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .text-gradient-teal {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--teal-500)), hsl(var(--teal-400)));
+  }
+
+  .bg-ocean-gradient {
+    background: linear-gradient(135deg, hsl(var(--ocean-950)), hsl(var(--ocean-800)));
+  }
+
+  .bg-ocean-dark {
+    background-color: hsl(var(--ocean-950));
+  }
+
+  .bg-ocean-900 {
+    background-color: hsl(var(--ocean-900));
+  }
+
+  .bg-sand {
+    background-color: hsl(var(--sand-50));
+  }
+
+  .bg-sand-100 {
+    background-color: hsl(var(--sand-100));
+  }
+
+  .text-ocean {
+    color: hsl(var(--ocean-950));
+  }
+
+  .text-ocean-700 {
+    color: hsl(var(--ocean-700));
+  }
+
+  .text-ocean-500 {
+    color: hsl(var(--ocean-500));
+  }
+
+  .text-sand {
+    color: hsl(var(--sand-50));
+  }
+
+  .text-sand-400 {
+    color: hsl(var(--sand-400));
+  }
+
+  .text-sand-600 {
+    color: hsl(var(--sand-600));
+  }
+
+  .text-teal {
+    color: hsl(var(--teal-500));
+  }
+
+  .text-teal-400 {
+    color: hsl(var(--teal-400));
+  }
+
+  .text-coral {
+    color: hsl(var(--coral-500));
+  }
+
+  .bg-teal {
+    background-color: hsl(var(--teal-500));
+  }
+
+  .bg-teal-900 {
+    background-color: hsl(var(--teal-900));
+  }
+
+  .bg-coral {
+    background-color: hsl(var(--coral-500));
+  }
+
+  .bg-coral-100 {
+    background-color: hsl(var(--coral-100));
+  }
+
+  .border-teal {
+    border-color: hsl(var(--teal-500));
+  }
+
+  .border-sand-200 {
+    border-color: hsl(var(--sand-200));
+  }
+
+  .noise-texture {
+    position: relative;
+  }
+  .noise-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--al-shadow-hover);
+  }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 229, 200, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(0, 229, 200, 0.6); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes flipDown {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+@keyframes pulseCoral {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
