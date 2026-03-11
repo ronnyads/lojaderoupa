@@ -72,9 +72,13 @@ const ProductPage = () => {
             className="relative"
           >
             <div className="aspect-[3/4] bg-sand-100 rounded-lg overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200 flex items-center justify-center">
-                <span className="font-display text-6xl text-ocean/10">ALOHA</span>
-              </div>
+              {getProductImage(product.sku) ? (
+                <img src={getProductImage(product.sku)} alt={product.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-b from-sand-100 to-sand-200 flex items-center justify-center">
+                  <span className="font-display text-6xl text-ocean/10">ALOHA</span>
+                </div>
+              )}
             </div>
             {product.badge && (
               <span className="absolute top-4 left-4 px-3 py-1.5 rounded-pill bg-coral text-sand font-heading text-xs font-bold uppercase">
