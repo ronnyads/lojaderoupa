@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import { products, formatPrice, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 
 const categories: Record<string, { label: string; filter: (p: Product) => boolean }> = {
   polos: { label: "Polos", filter: (p) => p.category === "polos" },
