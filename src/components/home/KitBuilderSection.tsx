@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { products, formatPrice, getProductsByCategory, type Product } from "@/data/products";
+import { getProductImage } from "@/data/productImages";
 import { useCartStore } from "@/stores/useCartStore";
 
 const KitBuilderSection = () => {
