@@ -278,7 +278,13 @@ const ProductPage = () => {
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             {related.map((p) => (
               <Link key={p.sku} to={`/produto/${p.slug}`} className="bg-card rounded-lg overflow-hidden card-hover" style={{ boxShadow: "var(--al-shadow-card)" }}>
-                <div className="aspect-square bg-sand-100" />
+                <div className="aspect-square bg-sand-100 overflow-hidden">
+                  {getProductImage(p.sku) ? (
+                    <img src={getProductImage(p.sku)} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    <div className="w-full h-full bg-sand-100" />
+                  )}
+                </div>
                 <div className="p-3">
                   <p className="font-body text-xs text-ocean/50 uppercase">{p.category}</p>
                   <p className="font-heading text-sm font-semibold text-ocean">{p.name}</p>

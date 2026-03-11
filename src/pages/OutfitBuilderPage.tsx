@@ -89,7 +89,10 @@ const OutfitBuilderPage = () => {
                       }`}
                       style={{ boxShadow: "var(--al-shadow-card)" }}
                     >
-                      <div className="aspect-square bg-sand-100 relative">
+                      <div className="aspect-square bg-sand-100 relative overflow-hidden">
+                        {getProductImage(product.sku) && (
+                          <img src={getProductImage(product.sku)} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                        )}
                         {isSelected && (
                           <div className="absolute top-2 right-2 w-6 h-6 bg-teal rounded-full flex items-center justify-center">
                             <Check size={14} className="text-ocean" />
