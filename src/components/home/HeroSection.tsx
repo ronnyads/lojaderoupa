@@ -62,7 +62,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-[0.95] text-ocean mb-4"
+          className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-[0.9] text-ocean mb-4"
         >
           CHEGA COM ESTILO.
           <br />
