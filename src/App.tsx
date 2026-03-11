@@ -42,6 +42,7 @@ const App = () => (
             <Route path="/favoritos" element={<Index />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <div className="pb-16 lg:pb-0" />
           <Footer />
           <WhatsAppFloat />
           <MobileNav />
