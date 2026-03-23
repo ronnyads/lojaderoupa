@@ -12,7 +12,7 @@ const photos = [
 
 const InstagramSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-sand">
+    <section className="py-16 lg:py-24 bg-void-950">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -20,17 +20,24 @@ const InstagramSection = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-ocean tracking-wide leading-[0.9]">
+          <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-text-primary tracking-wide leading-[0.9]">
             A COMUNIDADE ALOHA
           </h2>
-          <p className="font-body text-ocean-700 mt-2 mb-3">
+          <motion.div
+            className="h-px bg-gradient-to-r from-transparent via-neon-teal to-transparent mt-3 mb-4 max-w-xs mx-auto"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
+          <p className="font-sans text-text-secondary mt-2 mb-3">
             +35 mil seguidores que chegam com estilo. Siga e mostre o seu look.
           </p>
           <a
             href="https://instagram.com/aloha_surf_conceito"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-heading text-sm font-bold text-coral"
+            className="inline-flex items-center gap-2 font-mono text-sm font-bold text-neon-teal hover:underline"
           >
             <Instagram size={16} /> @aloha_surf_conceito
           </a>
@@ -57,9 +64,9 @@ const InstagramSection = () => {
                 loading="lazy"
               />
               {/* Hover overlay */}
-              <div className="absolute inset-0 bg-ocean-950/0 group-hover:bg-ocean-950/70 transition-all duration-300 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
-                <Heart size={28} className="text-sand" />
-                <span className="font-heading text-xs font-bold text-sand uppercase tracking-wider">Ver no Instagram</span>
+              <div className="absolute inset-0 bg-void-950/0 group-hover:bg-void-950/70 transition-all duration-300 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <Heart size={28} className="text-text-primary" />
+                <span className="font-mono text-xs font-bold text-text-primary uppercase tracking-wider">Ver no Instagram</span>
               </div>
             </motion.a>
           ))}
@@ -71,12 +78,12 @@ const InstagramSection = () => {
             href="https://instagram.com/aloha_surf_conceito"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-coral rounded-lg font-display text-base uppercase tracking-wider text-sand hover:brightness-110 transition"
+            className="btn-premium inline-flex items-center gap-2"
           >
             <Instagram size={18} /> SEGUIR @ALOHA_SURF_CONCEITO →
           </a>
-          <p className="font-body text-sm text-ocean/50">
-            Mostre seu look com <span className="font-heading font-bold text-teal">#AlohaEstiloCerto</span> — pode aparecer aqui 🤙
+          <p className="font-sans text-sm text-text-tertiary">
+            Mostre seu look com <span className="font-mono font-bold text-neon-teal">#AlohaEstiloCerto</span> — pode aparecer aqui 🤙
           </p>
         </div>
       </div>

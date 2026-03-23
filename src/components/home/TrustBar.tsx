@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
+import { useCountUp } from "@/hooks/useCountUp";
+
+const CountUpItem = ({ target, suffix = "" }: { target: number; suffix?: string }) => {
+  const { count, ref } = useCountUp(target, 1800);
+  return <span ref={ref}>{count.toLocaleString("pt-BR")}{suffix}</span>;
+};
 
 const items = [
-  { icon: "🏄", text: "+35 MIL SEGUIDORES" },
+  { icon: "🏄", text: <><CountUpItem target={35} />K+ SEGUIDORES</> },
   { icon: "📦", text: "ENTREGA EM TODO MANAUS" },
   { icon: "💳", text: "PIX E CARTÃO" },
   { icon: "🔁", text: "TROCA FÁCIL" },
@@ -10,7 +16,7 @@ const items = [
 
 const TrustBar = () => {
   return (
-    <div className="bg-ocean-900 py-4 overflow-hidden">
+    <div className="bg-void-900 py-4 overflow-x-auto border-b border-white/5">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -19,7 +25,7 @@ const TrustBar = () => {
       >
         {items.map((item, i) => (
           <motion.div
-            key={item.text}
+            key={i}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 + i * 0.08, duration: 0.4 }}
@@ -32,7 +38,9 @@ const TrustBar = () => {
             >
               {item.icon}
             </motion.span>
-            <span className="font-body text-xs tracking-wider text-sand/80 uppercase">{item.text}</span>
+            <span className="font-mono text-xs tracking-wider text-text-secondary uppercase">
+              {item.text}
+            </span>
           </motion.div>
         ))}
       </motion.div>

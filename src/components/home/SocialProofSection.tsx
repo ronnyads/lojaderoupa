@@ -71,12 +71,19 @@ const SocialProofSection = () => {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-ocean-950 noise-texture">
+    <section className="py-16 lg:py-24 bg-void-950">
       <div className="container">
-        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-sand text-center mb-2 tracking-wide">
+        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] text-text-primary text-center mb-2 tracking-wide">
           QUEM ALOHA, CHEGA 🤙
         </h2>
-        <p className="font-body text-teal-400 text-center mb-10">
+        <motion.div
+          className="h-px bg-gradient-to-r from-transparent via-neon-teal to-transparent mt-3 mb-2 max-w-xs mx-auto"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        />
+        <p className="font-sans text-neon-teal text-center mb-10">
           A galera de Manaus que chegou com estilo
         </p>
 
@@ -89,13 +96,13 @@ const SocialProofSection = () => {
           {/* Arrows */}
           <button
             onClick={prev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-coral flex items-center justify-center text-sand hover:brightness-110 transition hidden lg:flex"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-void-800 border border-white/10 flex items-center justify-center text-text-primary hover:border-neon-teal hover:text-neon-teal transition hidden lg:flex"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={next}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-coral flex items-center justify-center text-sand hover:brightness-110 transition hidden lg:flex"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-void-800 border border-white/10 flex items-center justify-center text-text-primary hover:border-neon-teal hover:text-neon-teal transition hidden lg:flex"
           >
             <ChevronRight size={20} />
           </button>
@@ -108,15 +115,15 @@ const SocialProofSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="w-80 lg:w-1/3 flex-shrink-0 snap-center bg-ocean-800 rounded-2xl p-6 border border-coral/20"
+                className="w-80 lg:w-1/3 flex-shrink-0 snap-center card-glass p-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-full bg-teal flex items-center justify-center font-heading text-sm font-bold text-ocean-950">
+                  <div className="w-11 h-11 rounded-full bg-neon-teal/20 border border-neon-teal/30 flex items-center justify-center font-mono text-sm font-bold text-neon-teal">
                     {review.initials}
                   </div>
                   <div className="flex-1">
-                    <p className="font-heading text-sm font-semibold text-sand">{review.name}</p>
-                    <p className="font-body text-xs text-sand/40">{review.city}</p>
+                    <p className="font-mono text-sm font-semibold text-text-primary">{review.name}</p>
+                    <p className="font-sans text-xs text-text-disabled">{review.city}</p>
                   </div>
                 </div>
                 <div className="flex gap-0.5 mb-3">
@@ -124,8 +131,8 @@ const SocialProofSection = () => {
                     <Star key={j} size={14} className="fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="font-body text-sm text-sand/70 leading-relaxed mb-4">{review.text}</p>
-                <span className="inline-block px-3 py-1.5 rounded-pill bg-ocean-700 border border-ocean-500/20 font-body text-[10px] text-teal-400">
+                <p className="font-sans text-sm text-text-secondary leading-relaxed mb-4">{review.text}</p>
+                <span className="badge badge-teal">
                   📦 {review.product}
                 </span>
               </motion.div>
@@ -138,8 +145,8 @@ const SocialProofSection = () => {
               <button
                 key={i}
                 onClick={() => setCurrentIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  i === currentIndex ? "bg-coral w-6" : "bg-ocean-700 hover:bg-ocean-500"
+                className={`h-2 rounded-full transition-all ${
+                  i === currentIndex ? "bg-neon-teal w-6" : "bg-void-700 hover:bg-void-600 w-2"
                 }`}
               />
             ))}
@@ -148,14 +155,14 @@ const SocialProofSection = () => {
 
         {/* Rating + CTA */}
         <div className="text-center mt-10 space-y-4">
-          <p className="font-body text-sm text-sand/50">
-            ⭐ <span className="font-price font-bold text-sand">4.9</span> — 127 avaliações de clientes de Manaus
+          <p className="font-sans text-sm text-text-tertiary">
+            ⭐ <span className="font-mono font-bold text-text-primary">4.9</span> — 127 avaliações de clientes de Manaus
           </p>
           <a
             href="https://instagram.com/aloha_surf_conceito"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-coral rounded-lg font-display text-base uppercase tracking-wider text-sand hover:brightness-110 transition"
+            className="btn-premium inline-flex items-center gap-2"
           >
             VER MAIS AVALIAÇÕES NO INSTAGRAM →
           </a>

@@ -1,10 +1,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import heroLook from "@/assets/hero-look.jpg";
 import poloImg from "@/assets/products/polo-navy.jpg";
 import bermudaImg from "@/assets/products/bermuda-navy.jpg";
 import boneImg from "@/assets/products/bone-navy.jpg";
+import HeroCanvas from "./HeroCanvas";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 const lookItems = [
   { name: "Polo Piquet Navy Premium", price: "R$ 189,90", img: poloImg },
@@ -21,17 +24,29 @@ const HeroSection = () => {
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+
+  const magPrimary = useMagnetic(0.3, 80);
+  const magSecondary = useMagnetic(0.3, 80);
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.3]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.5]);
 
   return (
-    <section ref={sectionRef} className="min-h-screen lg:min-h-[100vh] flex flex-col lg:flex-row relative overflow-hidden">
+    <section ref={sectionRef} className="min-h-screen flex flex-col lg:flex-row relative overflow-hidden bg-void-950">
+      {/* WebGL Canvas */}
+      <HeroCanvas />
+
+      {/* Background Grid */}
+      <div className="absolute inset-0 bg-grid opacity-20" />
+
+      {/* Glow Effect */}
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-neon-teal/10 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
+
       {/* Left panel - Dark with Look + Parallax */}
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, type: "spring", damping: 25 }}
-        className="relative lg:w-[55%] min-h-[60vh] lg:min-h-full bg-ocean-gradient noise-texture flex items-center justify-center p-8 overflow-hidden"
+        className="relative lg:w-[55%] min-h-[60vh] lg:min-h-full flex items-center justify-center p-8 overflow-hidden"
       >
         {/* Badge */}
         <motion.div
@@ -40,75 +55,112 @@ const HeroSection = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
         >
-          <span className="px-4 py-1.5 rounded-pill border border-teal bg-teal/10 font-heading text-xs text-teal-400 uppercase font-bold tracking-wider">
+          <span className="badge badge-teal flex items-center gap-2">
+            <Sparkles size={12} />
             LOOK DO DIA
           </span>
         </motion.div>
 
         {/* Look image with parallax */}
-        <motion.img
-          src={heroLook}
-          alt="Look do dia Aloha Surf Conceito - Polo Navy com Bermuda e Boné"
-          className="w-full max-w-lg object-contain relative z-[1] rounded-lg"
-          loading="eager"
+        <motion.div
+          className="relative z-[1]"
           style={{ y: imageY, scale: imageScale }}
-        />
+        >
+          <motion.img
+            src={heroLook}
+            alt="Look do dia Aloha Surf Concept"
+            className="w-full max-w-lg object-contain rounded-2xl shadow-elevation-4"
+            loading="eager"
+          />
+          {/* Glow behind image */}
+          <div className="absolute inset-0 -z-10 bg-neon-teal/20 blur-[60px] rounded-full scale-75" />
+        </motion.div>
 
         {/* Parallax dark overlay */}
         <motion.div
-          className="absolute inset-0 bg-ocean-950 pointer-events-none z-[2]"
+          className="absolute inset-0 bg-gradient-to-t from-void-950 pointer-events-none z-[2]"
           style={{ opacity: overlayOpacity }}
         />
 
-        {/* Micro-copy */}
+        {/* Terminal-style footer text */}
         <motion.p
-          className="absolute bottom-6 left-6 text-sand/40 font-body text-sm italic z-10"
+          className="absolute bottom-6 left-6 text-text-tertiary font-mono text-xs z-10 flex items-center gap-2"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1 }}
         >
-          Salve o look →
+          <span className="text-neon-teal">&gt;</span>
+          Salve o look para mais tarde
         </motion.p>
       </motion.div>
 
-      {/* Right panel - Sand CTA with parallax offset */}
+      {/* Right panel - Dark CTA */}
       <motion.div
         initial={{ x: 100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, type: "spring", damping: 25, delay: 0.2 }}
-        className="lg:w-[45%] bg-sand flex flex-col justify-center p-8 lg:p-14"
+        className="lg:w-[45%] flex flex-col justify-center p-8 lg:p-14 relative"
       >
+        {/* Border line */}
+        <div className="absolute left-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-border-default to-transparent hidden lg:block" />
+
         <motion.div style={{ y: textY }}>
-          <motion.span
+          {/* Terminal indicator */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="font-heading text-xs uppercase tracking-widest text-teal font-bold mb-4 block"
+            className="flex items-center gap-2 mb-4"
           >
-            NOVA COLEÇÃO • 2025
-          </motion.span>
+            <span className="w-2 h-2 rounded-full bg-neon-teal animate-pulse" />
+            <span className="font-mono text-xs text-neon-teal tracking-wider">
+              NOVA COLEÇÃO // 2025
+            </span>
+          </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-[0.9] text-ocean mb-4"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.1, delayChildren: 0.5 } },
+            }}
+            className="font-sans text-[clamp(2.5rem,7vw,4.5rem)] font-bold leading-[0.95] text-text-primary mb-4"
+            style={{ perspective: "600px" }}
           >
-            CHEGA COM ESTILO.
-            <br />
-            SAI COM O CONJUNTO.
+            {[
+              { text: "CHEGA COM", className: "text-gradient" },
+              { text: "ESTILO.", className: "" },
+              { text: "SAI COM O", className: "text-text-secondary" },
+              { text: "CONJUNTO.", className: "text-neon-teal" },
+            ].map((line, i) => (
+              <motion.span
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: "80%", rotateX: -40, skewY: 3 },
+                  visible: {
+                    opacity: 1, y: "0%", rotateX: 0, skewY: 0,
+                    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+                  },
+                }}
+                className={`block overflow-hidden ${line.className}`}
+                style={{ transformOrigin: "bottom left", display: "block" }}
+              >
+                {line.text}
+              </motion.span>
+            ))}
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="font-body text-ocean-700 text-base lg:text-lg mb-8 max-w-md"
+            className="font-sans text-text-secondary text-base lg:text-lg mb-8 max-w-md leading-relaxed"
           >
-            Polos, bermudas, bonés e óculos selecionados para você montar o look perfeito — e entregar na sua porta em Manaus.
+            Polos, bermudas, bonés e óculos selecionados para você montar o look perfeito — entregamos em Manaus.
           </motion.p>
 
-          {/* Look items with staggered reveal */}
+          {/* Look items - Frost Style */}
           <div className="space-y-3 mb-8">
             {lookItems.map((item, i) => (
               <motion.div
@@ -116,17 +168,21 @@ const HeroSection = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 + i * 0.1, duration: 0.5 }}
-                className="flex items-center gap-3"
+                className="flex items-center gap-4 p-3 rounded-xl bg-void-900/50 border border-border-subtle hover:border-neon-teal/30 transition-all group cursor-pointer"
               >
-                <img src={item.img} alt={item.name} className="w-12 h-14 object-cover rounded-md bg-sand-100" />
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-14 h-14 object-cover rounded-lg bg-void-800"
+                />
                 <div className="flex-1">
-                  <p className="font-body text-sm text-ocean font-medium">{item.name}</p>
-                  <p className="font-price text-sm text-coral font-semibold">{item.price}</p>
+                  <p className="font-sans text-sm text-text-primary font-medium">{item.name}</p>
+                  <p className="font-mono text-sm text-neon-teal">{item.price}</p>
                 </div>
                 <motion.button
-                  whileHover={{ scale: 1.15, rotate: 90 }}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-8 h-8 rounded-full bg-coral flex items-center justify-center text-sand text-lg transition-colors"
+                  className="w-8 h-8 rounded-lg bg-void-800 border border-border-default flex items-center justify-center text-text-secondary group-hover:text-neon-teal group-hover:border-neon-teal/50 transition-all"
                 >
                   +
                 </motion.button>
@@ -134,29 +190,40 @@ const HeroSection = () => {
             ))}
           </div>
 
-          {/* CTAs with micro-interactions */}
+          {/* CTAs - Frost Style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-3"
           >
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <motion.div
+              ref={magPrimary.ref as React.RefObject<HTMLDivElement>}
+              style={{ x: magPrimary.x, y: magPrimary.y }}
+              {...magPrimary.magneticProps}
+            >
               <Link
                 to="/montar-look"
-                className="block px-8 py-4 bg-coral rounded-lg font-heading text-sm font-bold uppercase tracking-wider text-sand hover:bg-coral-400 transition-colors text-center"
+                className="btn-premium flex items-center justify-center gap-2"
               >
                 MONTAR MEU LOOK
+                <ArrowRight size={16} className="btn-arrow" />
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+
+            <motion.div
+              ref={magSecondary.ref as React.RefObject<HTMLDivElement>}
+              style={{ x: magSecondary.x, y: magSecondary.y }}
+              {...magSecondary.magneticProps}
+            >
               <a
-                href="https://wa.me/5592934503860?text=Salve!%20Vi%20o%20look%20do%20dia%20na%20loja%20🤙"
+                href="https://wa.me/5592934503860?text=Salve!%20Vi%20o%20look%20do%20dia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block px-8 py-4 border-2 border-ocean rounded-lg font-heading text-sm font-bold uppercase tracking-wider text-ocean hover:bg-ocean hover:text-sand transition-colors text-center"
+                className="btn-ghost flex items-center justify-center gap-2"
               >
-                💬 VER NO WHATSAPP
+                <span className="text-neon-green">💬</span>
+                VER NO WHATSAPP
               </a>
             </motion.div>
           </motion.div>

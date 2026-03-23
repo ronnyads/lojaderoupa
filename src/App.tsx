@@ -1,8 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import CustomCursor from "@/components/ui/CustomCursor";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import PageTransition from "@/components/ui/PageTransition";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
@@ -19,29 +23,40 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AppRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/produto/:slug" element={<PageTransition><ProductPage /></PageTransition>} />
+        <Route path="/montar-look" element={<PageTransition><OutfitBuilderPage /></PageTransition>} />
+        <Route path="/looks" element={<PageTransition><LooksPage /></PageTransition>} />
+        <Route path="/looks/:slug" element={<PageTransition><LooksPage /></PageTransition>} />
+        <Route path="/colecao/:slug" element={<PageTransition><CollectionPage /></PageTransition>} />
+        <Route path="/drop" element={<PageTransition><DropPage /></PageTransition>} />
+        <Route path="/contato" element={<PageTransition><ContactPage /></PageTransition>} />
+        <Route path="/sobre" element={<PageTransition><ContactPage /></PageTransition>} />
+        <Route path="/carrinho" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/conta" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/favoritos" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Sonner />
         <BrowserRouter>
+          <CustomCursor />
+          <ScrollProgress />
           <Header />
           <CartDrawer />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/produto/:slug" element={<ProductPage />} />
-            <Route path="/montar-look" element={<OutfitBuilderPage />} />
-            <Route path="/looks" element={<LooksPage />} />
-            <Route path="/looks/:slug" element={<LooksPage />} />
-            <Route path="/colecao/:slug" element={<CollectionPage />} />
-            <Route path="/drop" element={<DropPage />} />
-            <Route path="/contato" element={<ContactPage />} />
-            <Route path="/sobre" element={<ContactPage />} />
-            <Route path="/carrinho" element={<Index />} />
-            <Route path="/conta" element={<Index />} />
-            <Route path="/favoritos" element={<Index />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppRoutes />
           <div className="pb-16 lg:pb-0" />
           <Footer />
           <WhatsAppFloat />
