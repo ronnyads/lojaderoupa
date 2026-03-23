@@ -1,13 +1,20 @@
+import { lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
+
+// Above-the-fold: carrega imediatamente
 import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
-import DropSection from "@/components/home/DropSection";
-import ProductsSection from "@/components/home/ProductsSection";
-import LooksSection from "@/components/home/LooksSection";
-import KitBuilderSection from "@/components/home/KitBuilderSection";
-import SocialProofSection from "@/components/home/SocialProofSection";
-import InstagramSection from "@/components/home/InstagramSection";
-import WhatsAppCTASection from "@/components/home/WhatsAppCTASection";
+
+// Below-the-fold: lazy loaded
+const DropSection = lazy(() => import("@/components/home/DropSection"));
+const ProductsSection = lazy(() => import("@/components/home/ProductsSection"));
+const SocialProofSection = lazy(() => import("@/components/home/SocialProofSection"));
+const LooksSection = lazy(() => import("@/components/home/LooksSection"));
+const KitBuilderSection = lazy(() => import("@/components/home/KitBuilderSection"));
+const InstagramSection = lazy(() => import("@/components/home/InstagramSection"));
+const WhatsAppCTASection = lazy(() => import("@/components/home/WhatsAppCTASection"));
+
+const SectionFallback = () => <div className="h-64 bg-void-950" />;
 
 const Index = () => {
   return (
@@ -29,15 +36,31 @@ const Index = () => {
           sameAs: ["https://instagram.com/aloha_surf_conceito"],
         })}</script>
       </Helmet>
+
       <HeroSection />
       <TrustBar />
-      <DropSection />
-      <ProductsSection />
-      <SocialProofSection />
-      <LooksSection />
-      <KitBuilderSection />
-      <InstagramSection />
-      <WhatsAppCTASection />
+
+      <Suspense fallback={<SectionFallback />}>
+        <DropSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ProductsSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <SocialProofSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <LooksSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <KitBuilderSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <InstagramSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <WhatsAppCTASection />
+      </Suspense>
     </>
   );
 };
